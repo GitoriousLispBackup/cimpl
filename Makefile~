@@ -1,0 +1,36 @@
+TITLE="Adamas-C"
+VERSION="0.0.0"
+CREATOR="person:greyknight3@yahoo.com/2000"
+IDENT="adamas-c.app"
+ABSTRACT="A basic Adamas implementation in C."
+REQUIRES=-lm
+SOURCES=sources/adamas.c
+FINAL=binaries/Adamas-C
+ENTRYPOINT=main
+
+####
+
+OBJECTS:=$(SOURCES:.c=.o)
+OBJECTS:=$(OBJECTS:sources/=binaries/)
+CC=gcc
+CFLAGS=-g -Wall -W
+LDFLAGS=
+MACROS=-DTITLE='"${TITLE}"' -DVERSION='"${VERSION}"' -DCREATOR='"${CREATOR}"' -DIDENT='"${IDENT}"'
+
+all: $(FINAL)
+$(FINAL): $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(REQUIRES)
+
+clean:
+	-rm binaries/*.o
+	-rm $(FINAL)
+
+spotless: clean
+	-rm sources/*~
+
+sources/adamas.c: sources/adamas.h
+
+.SUFFIXES:
+
+binaries/%.o: sources/%.c
+	$(CC) $(CFLAGS) $(MACROS) -c -o $@ $<

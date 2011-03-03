@@ -1,0 +1,17 @@
+(define-system Adamas-C.app
+  title: "Adamas-C"
+  version: '(0 0 0)
+  creator: "person:greyknight3@yahoo.com/2000"
+  ident: "adamas-c.app"
+  abstract: "A basic Adamas implementation in C."
+  (requires
+    "c.clib" ; libc
+    "m.clib" ; libm
+  )
+  (provides adamas-c:)
+  (sources
+    (#{adamas.c}  #{adamas.h})
+     #{adamas.h}
+  )
+  entry: 'main
+)
