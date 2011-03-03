@@ -1,0 +1,30 @@
+## sysdef options ##
+%OPTIONS%
+## end sysdef options ##
+
+OBJECTS:=$(SOURCES:.c=.o)
+OBJECTS:=$(shell echo '${OBJECTS}' | sed -e 's/sources/binaries/g')
+CC=gcc
+CFLAGS=-g -Wall -W
+LDFLAGS=
+MACROS=-DTITLE='"${TITLE}"' -DVERSION='"${VERSION}"' -DCREATOR='"${CREATOR}"' -DIDENT='"${IDENT}"'
+
+all: $(FINAL)
+$(FINAL): $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(REQUIRES)
+
+clean:
+	-rm binaries/*.o
+	-rm $(FINAL)
+
+spotless: clean
+	-rm sources/*~
+
+## dependency map ##
+%DEPENDENCIES%
+## end dependency map ##
+
+.SUFFIXES:
+
+binaries/%.o: sources/%.c
+	$(CC) $(CFLAGS) $(MACROS) -c -o $@ $<
